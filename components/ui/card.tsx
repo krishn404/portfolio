@@ -41,9 +41,16 @@ const Card = React.forwardRef<
   return (
     <div
       ref={(node) => {
-        if (typeof ref === "function") ref(node);
-        else if (ref) ref.current = node;
-        divRef.current = node;
+        // Correctly handle different ref types
+        if (node) {
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref && 'current' in ref) {
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          }
+          // Use a type assertion to assign to divRef
+          (divRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        }
       }}
       onMouseMove={handleMouseMove}
       onFocus={handleFocus}
