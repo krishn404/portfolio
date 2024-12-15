@@ -51,7 +51,7 @@ const Card = React.forwardRef<
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow transition-transform duration-300 hover:scale-105 hover:shadow-lg",
+        "relative flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow transition-transform duration-300",
         className
       )}
       {...props}
