@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-export function Header() {
+interface HeaderProps {
+  className?: string;
+}
+
+export function Header({ className }: HeaderProps) {
   const [profilePic, setProfilePic] = useState<string | null>(null)
 
   useEffect(() => {
@@ -24,7 +28,7 @@ export function Header() {
   }, [])
 
   return (
-    <header className="flex flex-col items-center justify-center min-h-screen max-w-4xl mx-auto px-6 text-center">
+    <header className={`flex flex-col items-center justify-center min-h-screen max-w-4xl mx-auto px-6 text-center ${className}`}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -63,7 +67,7 @@ export function Header() {
         transition={{ duration: 0.8, delay: 0.6 }}
       >
         <a
-          href="mailto:krishna@example.com"
+          href="mailto:maharshikrishnakant@gmail.com"
           className="bg-blue-500 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-600 transition-colors duration-300"
         >
           Get in Touch

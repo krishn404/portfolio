@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 
 export function Navbar() {
   const [activeSection, setActiveSection] = useState('home')
-  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,8 +21,6 @@ export function Navbar() {
       if (currentSection) {
         setActiveSection(currentSection)
       }
-
-      setIsScrolled(window.scrollY > 20)
     }
 
     window.addEventListener('scroll', handleScroll)
