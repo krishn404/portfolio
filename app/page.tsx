@@ -1,37 +1,27 @@
-"use client";
-
 import { Header } from "@/components/header"
 import { Intro } from "@/components/intro"
 import { Projects } from "@/components/projects"
-import { useEffect } from "react"
-import { gsap } from "gsap"
+import { Skills } from "@/components/skills"
+import { About } from "@/components/about"
 
 export default function Home() {
-  useEffect(() => {
-    const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
-    timeline
-      .set(".animate", { opacity: 0, y: 20, scale: 0.98 })
-      .to(".animate", {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.8,
-        stagger: {
-          amount: 0.6,
-          ease: "power2.inOut"
-        },
-        clearProps: "all"
-      });
-  }, []);
-
   return (
     <div className="relative">
-      <main className="min-h-screen pb-16">
+      <section id="home" className="min-h-screen flex items-center">
         <Header className="animate" />
-        <Intro className="animate" />
+      </section>
+      
+      <section id="about" className="min-h-screen flex items-center">
+        <About className="animate" />
+      </section>
+      
+      <section id="skills" className="min-h-screen flex items-center">
+        <Skills className="animate" />
+      </section>
+      
+      <section id="projects" className="min-h-screen">
         <Projects className="animate" />
-      </main>
+      </section>
     </div>
   )
 }
