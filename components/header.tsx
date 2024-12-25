@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail} from 'lucide-react'
+import { Github, Linkedin, Mail } from 'lucide-react'
 import GitHubCalendar from 'react-github-calendar'
+import { SpotifyCard } from './spotify-card'
 
 interface HeaderProps {
-  className?: string;
+  className?: string
 }
 
 export function Header({ className }: HeaderProps) {
@@ -21,7 +22,6 @@ export function Header({ className }: HeaderProps) {
         setProfilePic(data.avatar_url)
       } catch (error) {
         console.error('Error fetching GitHub profile:', error)
-        // Fallback to a default image if the fetch fails
         setProfilePic('/default-profile.jpg')
       }
     }
@@ -29,16 +29,10 @@ export function Header({ className }: HeaderProps) {
     fetchProfilePic()
   }, [])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // setScrollY(window.scrollY)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
-    <header className={`flex flex-col items-center justify-center min-h-screen max-w-4xl mx-auto px-6 text-center ${className}`}>
+    <header
+      className={`min-h-screen max-w-7xl mx-auto px-6 py-12 mt-20 ${className}`}
+    >
       <style jsx>{`
         @keyframes pulse {
           0% {
@@ -54,105 +48,148 @@ export function Header({ className }: HeaderProps) {
             opacity: 0.4;
           }
         }
+
+        .masonry-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          grid-auto-rows: minmax(min-content, max-content);
+          gap: 2rem;
+          align-items: start;
+        }
+
+        @media (min-width: 1024px) {
+          .masonry-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
       `}</style>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="mb-8"
-      >
-        {profilePic && (
-          <div className="relative">
-            <Image
-              src={profilePic}
-              alt="Krishna Kant"
-              width={150}
-              height={150}
-              className="rounded-full border-4 border-blue-500 relative z-10"
-            />
-            <div 
-              className="absolute inset-0 rounded-full border-4 border-blue-500"
-              style={{
-                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                boxShadow: '0 0 15px rgba(66, 153, 225, 0.5)',
-              }}
-            ></div>
-          </div>
-        )}
-      </motion.div>
-      
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-4xl md:text-5xl font-bold mb-4"
-      >
-        Krishna Kant
-      </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-        className="text-xl md:text-2xl text-gray-300 mb-8"
-      >
-        Front end Developer & AI Enthusiast
-      </motion.p>
 
-      <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 1 }}
-  className="mt-8"
->
-  <GitHubCalendar 
-    username="krishn404" 
-    blockSize={13}
-    blockMargin={3}
-    fontSize={16}
-    style={{
-      borderRadius: '12px',
-      background: 'rgba(255, 255, 255, 0.10)', 
-      backdropFilter: 'blur(10px)', 
-      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)', 
-      border: '1px solid rgba(255, 255, 255, 0.2)', 
-      color: '#ffffff', 
-      padding: '20px',
-      overflow: 'hidden',
-    }}
-  />
-</motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-        className="flex items-center gap-4 mt-8 justify-center"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 backdrop-blur-sm">
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
-          </span>
-          <span className="text-sm font-mono">Available for Freelance Work</span>
-        </div>
-        {[
-          { icon: <Github className="w-6 h-6" />, href: "https://github.com/krishn404" },
-          { icon: <Linkedin className="w-6 h-6" />, href: "https://www.linkedin.com/in/krishn404/" },
-          { icon: <Mail className="w-6 h-6" />, href: "mailto:maharshikrishnakant@gmail.com" },
-        ].map((social, index) => (
-          <motion.a
-            key={index}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-purple-500/20 rounded-full"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+      <div className="flex flex-col gap-8">
+        {/* Top Section with Profile and Spotify */}
+        <div className="masonry-grid">
+          {/* Profile Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10 h-[400px] flex flex-col justify-center"
           >
-            {social.icon}
-          </motion.a>
-        ))}
-      </motion.div>
+            <div className="flex flex-col items-center gap-6">
+              {profilePic && (
+                <div className="relative">
+                  <Image
+                    src={profilePic}
+                    alt="Krishna Kant"
+                    width={180}
+                    height={180}
+                    className="rounded-full border-4 border-blue-500 relative z-10"
+                  />
+                  <div
+                    className="absolute inset-0 rounded-full border-4 border-blue-500"
+                    style={{
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                      boxShadow: '0 0 15px rgba(66, 153, 225, 0.5)',
+                    }}
+                  ></div>
+                </div>
+              )}
+              <div className="text-center">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-4xl md:text-5xl font-bold mb-2"
+                >
+                  Krishna Kant
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="text-xl md:text-2xl text-gray-300"
+                >
+                  Front end Developer & AI Enthusiast
+                </motion.p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Spotify Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10 h-[400px] flex flex-col justify-center"
+          >
+            <SpotifyCard />
+          </motion.div>
+        </div>
+
+        {/* GitHub Calendar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10"
+        >
+          <GitHubCalendar
+            username="krishn404"
+            blockSize={12}
+            blockMargin={4}
+            fontSize={14}
+            style={{
+              color: '#ffffff',
+              width: '100%',
+              height: 'auto',
+            }}
+          />
+        </motion.div>
+
+        {/* Availability & Social Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="flex flex-col sm:flex-row items-center gap-6 justify-between"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 backdrop-blur-sm bg-black/20">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+            </span>
+            <span className="text-sm font-mono">Available for Freelance Work</span>
+          </div>
+          
+          <div className="flex gap-4">
+            {[
+              {
+                icon: <Github className="w-6 h-6" />,
+                href: 'https://github.com/krishn404',
+              },
+              {
+                icon: <Linkedin className="w-6 h-6" />,
+                href: 'https://www.linkedin.com/in/krishn404/',
+              },
+              {
+                icon: <Mail className="w-6 h-6" />,
+                href: 'mailto:maharshikrishnakant@gmail.com',
+              },
+            ].map((social, index) => (
+              <motion.a
+                key={index}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-white transition-colors p-3 hover:bg-purple-500/20 rounded-full bg-black/20 backdrop-blur-sm border border-white/10"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {social.icon}
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </header>
   )
 }

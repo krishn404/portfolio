@@ -4,8 +4,14 @@ import Link from 'next/link'
 export function Footer() {
   return (
     <footer className="bg-[#0A0A0A] py-6 border-t border-gray-800/50">
+      
       <div className="max-w-2xl mx-auto px-6 flex justify-between items-center">
-        <p className="text-sm text-gray-400">© 2023 Krishna Kant. All rights reserved.</p>
+        <p className="text-sm text-gray-400">
+          © 2024 Designed and Developed by 
+          <Link href="https://github.com/krishn404" className="text-gray-400 hover:text-white transition-colors">
+            Krishna Kant
+          </Link>
+        </p>
         <div className="flex gap-4">
           <Link 
             href="https://linkedin.com/in/krishn404" 
@@ -21,6 +27,7 @@ export function Footer() {
           </Link>
         </div>
       </div>
+
     </footer>
   )
 }
