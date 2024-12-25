@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { Github, Linkedin, Mail} from 'lucide-react'
+import GitHubCalendar from 'react-github-calendar'
 
 interface HeaderProps {
   className?: string;
@@ -27,8 +29,32 @@ export function Header({ className }: HeaderProps) {
     fetchProfilePic()
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // setScrollY(window.scrollY)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <header className={`flex flex-col items-center justify-center min-h-screen max-w-4xl mx-auto px-6 text-center ${className}`}>
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 0.4;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.7;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0.4;
+          }
+        }
+      `}</style>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -36,15 +62,25 @@ export function Header({ className }: HeaderProps) {
         className="mb-8"
       >
         {profilePic && (
-          <Image
-            src={profilePic}
-            alt="Krishna Kant"
-            width={150}
-            height={150}
-            className="rounded-full border-4 border-blue-500"
-          />
+          <div className="relative">
+            <Image
+              src={profilePic}
+              alt="Krishna Kant"
+              width={150}
+              height={150}
+              className="rounded-full border-4 border-blue-500 relative z-10"
+            />
+            <div 
+              className="absolute inset-0 rounded-full border-4 border-blue-500"
+              style={{
+                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                boxShadow: '0 0 15px rgba(66, 153, 225, 0.5)',
+              }}
+            ></div>
+          </div>
         )}
       </motion.div>
+      
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,19 +95,63 @@ export function Header({ className }: HeaderProps) {
         transition={{ duration: 0.8, delay: 0.4 }}
         className="text-xl md:text-2xl text-gray-300 mb-8"
       >
-        Full-Stack Developer & AI Enthusiast
+        Front end Developer & AI Enthusiast
       </motion.p>
+
+      <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 1 }}
+  className="mt-8"
+>
+  <GitHubCalendar 
+    username="krishn404" 
+    blockSize={13}
+    blockMargin={3}
+    fontSize={16}
+    style={{
+      borderRadius: '12px',
+      background: 'rgba(255, 255, 255, 0.10)', 
+      backdropFilter: 'blur(10px)', 
+      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)', 
+      border: '1px solid rgba(255, 255, 255, 0.2)', 
+      color: '#ffffff', 
+      padding: '20px',
+      overflow: 'hidden',
+    }}
+  />
+</motion.div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+        className="flex items-center gap-4 mt-8 justify-center"
       >
-        <a
-          href="mailto:maharshikrishnakant@gmail.com"
-          className="bg-blue-500 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-600 transition-colors duration-300"
-        >
-          Get in Touch
-        </a>
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 backdrop-blur-sm">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+          </span>
+          <span className="text-sm font-mono">Available for Freelance Work</span>
+        </div>
+        {[
+          { icon: <Github className="w-6 h-6" />, href: "https://github.com/krishn404" },
+          { icon: <Linkedin className="w-6 h-6" />, href: "https://www.linkedin.com/in/krishn404/" },
+          { icon: <Mail className="w-6 h-6" />, href: "mailto:maharshikrishnakant@gmail.com" },
+        ].map((social, index) => (
+          <motion.a
+            key={index}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/80 hover:text-white transition-colors p-2 hover:bg-purple-500/20 rounded-full"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            {social.icon}
+          </motion.a>
+        ))}
       </motion.div>
     </header>
   )
