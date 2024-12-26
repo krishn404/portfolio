@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Github,  } from 'lucide-react'
 import { gsap } from "gsap";
+import { FaJs, FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaGit, FaGithub, FaStar } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs } from "react-icons/si";
+
 
 interface Project {
   title: string
@@ -15,7 +18,23 @@ interface Project {
   users?: string
   liveLink?: string;
   repoLink?: string;
+  techStack?: string[];
 }
+
+const skillIcons = {
+  "JavaScript": <FaJs />,
+  "React": <FaReact />,
+  "Node.js": <FaNodeJs />,
+  "Express": <FaNodeJs />,
+  "HTML": <FaHtml5 />,
+  "CSS": <FaCss3Alt />,
+  "Tailwind CSS": <FaCss3Alt />,
+  "Git": <FaGit />,
+  "GitHub": <FaGithub />,
+  "TypeScript": <SiTypescript />,
+  "Next.js": <SiNextdotjs />,
+  "Gemini": <FaStar />,
+};
 
 const projects: Project[] = [
   {
@@ -23,14 +42,16 @@ const projects: Project[] = [
     description: "A document editor and generator tool which uses Gemini AI for enhanced content creation.",
     emoji: "📝",
     liveLink: "https://genxie.vercel.app/",
-    repoLink: "https://github.com/krishn404/genxie"
+    repoLink: "https://github.com/krishn404/genxie",
+    techStack: ["React", "Next.js", "Tailwind CSS"],
   },
   {
     title: "LinkedIn Carousel Maker",
     description: "An application that creates engaging slides for content creators on LinkedIn.",
     emoji: "ℹ️",
-    liveLink: "https://github.com/krishn404/Linkedin-slides",
-    repoLink: "https://linkslide.vercel.app/"
+    liveLink: "https://linkslide.vercel.app/",
+    repoLink: "https://github.com/krishn404/Linkedin-slides",
+    techStack: ["React", "Next.js", "Tailwind CSS"],
   },
   {
     title: "Balloon Burst Game",
@@ -38,7 +59,8 @@ const projects: Project[] = [
     emoji: "🎈",
     users: "10k+ players",
     liveLink: "https://target-balloon.vercel.app/",
-    repoLink: "https://github.com/krishn404/target-balloon"
+    repoLink: "https://github.com/krishn404/target-balloon",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     title: "Virtual Gallery",
@@ -46,6 +68,7 @@ const projects: Project[] = [
     emoji: "🖼️",
     users: "5k+ visitors",
     liveLink: "https://virtual-showcase.vercel.app",
+    techStack: ["HTML", "CSS", "JavaScript"],
   }
 ]
 
@@ -70,11 +93,11 @@ export function Projects({ className }: ProjectsProps) {
       <h2 className="text-xl font-semibold mb-6">
         Projects <span role="img" aria-label="folder">📁</span>
       </h2>
-      <div className="space-y-4" ref={cardsRef}>
+      <div className="grid grid-cols-2 gap-y-12 gap-x-[40%] ml-[-25%]" ref={cardsRef}>
         {projects.map((project) => (
-          <Card key={project.title} className="bg-gray-900/50 border-gray-800">
+          <Card key={project.title} className="bg-gray-900/50 border-gray-800 w-[500px] h-[300px]">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-">
                 {project.title}
                 {project.emoji && <span role="img">{project.emoji}</span>}
               </CardTitle>
@@ -83,8 +106,7 @@ export function Projects({ className }: ProjectsProps) {
               <p className="text-gray-400 mb-2">{project.description}</p>
               <div className="flex items-center justify-between">
                 <div className="flex gap-2">
-                {project.repoLink && (
-
+                  {project.repoLink && (
                     <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                       <Github className="w-4 h-4" />
                     </a>
@@ -108,16 +130,11 @@ export function Projects({ className }: ProjectsProps) {
                   )}
                 </div>
                 <div className="flex gap-2">
-                  {project.liveLink && (
-                    <a 
-                      href={project.liveLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="inline-flex items-center animate-background-shine bg-[linear-gradient(110deg,#939393,45%,#1e293b,55%,#939393)] bg-[length:250%_100%] bg-clip-text text-transparent transition-all duration-300 hover:font-bold"
-                    >
-                    </a>
-                  )}
-                  
+                  {project.techStack && project.techStack.map((tech) => (
+                    <span key={tech} className="flex items-center text-gray-400">
+                      {skillIcons[tech as keyof typeof skillIcons]}
+                    </span>
+                  ))}
                 </div>
               </div>
             </CardContent>
