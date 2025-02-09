@@ -25,60 +25,78 @@ export function SpotifyCard() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 1.2 }}
-      className="w-full max-w-[480px] mt-8"
+      className="w-full max-w-[480px] mt-0 md:mt-8"
     >
-      <div className="rounded-xl bg-[#121212] border border-white/5 overflow-hidden">
-        <div className="p-5">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-3 h-3 bg-[#1DB954] rounded-full" />
-            <span className="text-white text-sm font-medium">Now Playing</span>
-          </div>
-          
-          <div className="w-full h-[200px] bg-[#181818] rounded-lg mb-6 relative overflow-hidden">
-            {!imageError ? (
-              <Image
-                src={SPOTIFY_API_URL || ''}
-                alt="Spotify Now Playing"
-                fill
-                style={{ objectFit: 'contain' }}
-                onError={() => {
-                  setImageError(true)
-                  setIsLoading(false)
-                }}
-                onLoad={() => setIsLoading(false)}
-                className={`transition-opacity duration-300 ${
-                  isLoading ? 'opacity-0' : 'opacity-100'
-                }`}
-                priority
-                unoptimized
-              />
-            ) : null}
-            
-            {(isLoading || imageError) && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white/50 text-sm">
-                  {isLoading ? 'Loading...' : 'Unable to load Spotify status'}
-                </span>
-              </div>
-            )}
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-white/70 text-[13px]">Listening on Spotify</span>
+      <div className="rounded-lg bg-[#121212] border border-white/5 overflow-hidden">
+        <div className="p-2 md:p-5">
+          {/* Mobile View */}
+          <div className="flex md:hidden items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-[#1DB954] rounded-full" />
+              <span className="text-white/70 text-xs">Now Playing</span>
             </div>
             <a
               href="https://open.spotify.com/user/31eq3547p3drfawz256uxy4erspy"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 bg-[#1DB954] text-black text-xs font-bold rounded-full hover:bg-[#1ed760] transition-colors"
+              className="px-2 py-1 bg-[#1DB954] text-black text-[10px] font-medium rounded-full hover:bg-[#1ed760] transition-colors"
             >
               OPEN SPOTIFY
             </a>
+          </div>
+
+          {/* Desktop View */}
+          <div className="hidden md:block">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-3 h-3 bg-[#1DB954] rounded-full" />
+              <span className="text-white text-sm font-medium">Now Playing</span>
+            </div>
+            
+            <div className="w-full h-[200px] bg-[#181818] rounded-lg mb-6 relative overflow-hidden">
+              {!imageError ? (
+                <Image
+                  src={SPOTIFY_API_URL || ''}
+                  alt="Spotify Now Playing"
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  onError={() => {
+                    setImageError(true)
+                    setIsLoading(false)
+                  }}
+                  onLoad={() => setIsLoading(false)}
+                  className={`transition-opacity duration-300 ${
+                    isLoading ? 'opacity-0' : 'opacity-100'
+                  }`}
+                  priority
+                  unoptimized
+                />
+              ) : null}
+              
+              {(isLoading || imageError) && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-white/50 text-sm">
+                    {isLoading ? 'Loading...' : 'Unable to load Spotify status'}
+                  </span>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-white/70 text-[13px]">Listening on Spotify</span>
+              </div>
+              <a
+                href="https://open.spotify.com/user/31eq3547p3drfawz256uxy4erspy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-1.5 bg-[#1DB954] text-black text-xs font-bold rounded-full hover:bg-[#1ed760] transition-colors"
+              >
+                OPEN SPOTIFY
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </motion.div>
   )
 }
-

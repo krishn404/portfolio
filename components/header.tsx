@@ -119,7 +119,7 @@ export function Header({ className }: HeaderProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10 h-[400px] flex flex-col justify-center"
+            className="hidden md:block bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10 h-[400px] flex flex-col justify-center"
           >
             <SpotifyCard />
           </motion.div>
@@ -130,7 +130,7 @@ export function Header({ className }: HeaderProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10"
+          className="hidden md:block bg-black/20 backdrop-blur-lg rounded-2xl p-8 border border-white/10"
         >
           <GitHubCalendar
             username="krishn404"
@@ -193,4 +193,3 @@ export function Header({ className }: HeaderProps) {
     </header>
   )
 }
-

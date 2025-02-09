@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Badge } from "@/components/ui/badge"
+import {  } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Github,  } from 'lucide-react'
 import { gsap } from "gsap";
@@ -54,19 +54,18 @@ const projects: Project[] = [
     techStack: ["React", "Next.js", "Tailwind CSS"],
   },
   {
-    title: "Balloon Burst Game",
-    description: "An interactive game built with HTML, CSS, and JavaScript where players pop balloons.",
-    emoji: "🎈",
-    users: "10k+ players",
-    liveLink: "https://target-balloon.vercel.app/",
-    repoLink: "https://github.com/krishn404/target-balloon",
-    techStack: ["HTML", "CSS", "JavaScript"],
+    title: "Retrova - Polaroid maker",
+    description: "A web app that transforms your photos into nostalgic Polaroid-style images!.",
+    emoji: "🖼️",
+    liveLink: "https://retrova.vercel.app/",
+    repoLink: "https://github.com/krishn404/polaroid",
+    techStack: ["React", "Next.js", "Tailwind CSS"],
   },
   {
     title: "Virtual Gallery",
     description: "An immersive virtual art gallery experience created using GSAP for smooth animations.",
     emoji: "🖼️",
-    users: "5k+ visitors",
+    // users: "5k+ visitors",
     liveLink: "https://virtual-showcase.vercel.app",
     techStack: ["HTML", "CSS", "JavaScript"],
   }
@@ -89,53 +88,52 @@ export function Projects({ className }: ProjectsProps) {
   }, []);
 
   return (
-    <section className={`max-w-2xl mx-auto p-6 ${className}`}>
+    <section className={`max-w-2xl mx-auto py-16 md:py-24 px-4 ${className}`}>
       <h2 className="text-xl font-semibold mb-6">
         Projects <span role="img" aria-label="folder">📁</span>
       </h2>
-      <div className="grid grid-cols-2 gap-y-12 gap-x-[40%] ml-[-25%]" ref={cardsRef}>
+      <div className="grid grid-cols-1 gap-6" ref={cardsRef}>
         {projects.map((project) => (
-          <Card key={project.title} className="bg-gray-900/50 border-gray-800 w-[500px] h-[300px]">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-">
+          <Card key={project.title} className="bg-gray-900/50 border-gray-800 w-full">
+            <CardHeader className="space-y-2">
+              <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                {project.emoji && <span role="img" aria-label="project icon">{project.emoji}</span>}
                 {project.title}
-                {project.emoji && <span role="img">{project.emoji}</span>}
               </CardTitle>
+              <p className="text-sm md:text-base text-gray-400">{project.description}</p>
+              {project.users && <p className="text-xs text-gray-500">{project.users}</p>}
             </CardHeader>
             <CardContent>
-              <p className="text-gray-400 mb-2">{project.description}</p>
-              <div className="flex items-center justify-between">
-                <div className="flex gap-2">
-                  {project.repoLink && (
-                    <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                      <Github className="w-4 h-4" />
-                    </a>
-                  )}
-                  {project.liveLink && (
-                    <Badge variant="secondary" className="bg-zinc-600 text-white">
-                      <a 
-                        href={project.liveLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="hover:none"
-                      >
-                        Live Preview
-                      </a>
-                    </Badge>
-                  )}
-                  {project.archived && (
-                    <Badge variant="secondary" className="bg-gray-800">
-                      archived
-                    </Badge>
-                  )}
-                </div>
-                <div className="flex gap-2">
-                  {project.techStack && project.techStack.map((tech) => (
-                    <span key={tech} className="flex items-center text-gray-400">
-                      {skillIcons[tech as keyof typeof skillIcons]}
-                    </span>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {project.techStack?.map((tech) => (
+                  <div key={tech} className="flex items-center gap-1 text-xs bg-gray-800/50 px-2 py-1 rounded">
+                    {skillIcons[tech as keyof typeof skillIcons]}
+                    {tech}
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-4 mt-4">
+                {project.liveLink && (
+                  <a 
+                    href={project.liveLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded-lg transition-all duration-200 text-sm font-medium hover:scale-105 border border-blue-600/30"
+                  >
+                    <span className="relative">Live Preview</span>
+                  </a>
+                )}
+                {project.repoLink && (
+                  <a 
+                    href={project.repoLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800/40 text-gray-300 hover:bg-gray-700/40 rounded-lg transition-all duration-200 text-sm font-medium hover:scale-105 border border-gray-700/50"
+                  >
+                    <Github className="w-4 h-4" />
+                    <span>Code</span>
+                  </a>
+                )}
               </div>
             </CardContent>
           </Card>
