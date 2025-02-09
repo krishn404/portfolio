@@ -1,10 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      'avatars.githubusercontent.com', 
-      'camo.githubusercontent.com',
-      'spotify-github-profile.kittinanx.com'
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'camo.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'spotify-github-profile.kittinanx.com',
+      },
     ],
   },
 };

@@ -18,4 +18,3 @@ export function About({ className }: AboutProps) {
     </section>
   )
 }
-
